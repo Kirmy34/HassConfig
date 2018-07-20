@@ -1,3 +1,5 @@
+# Triggers if hour and minute are reached every day
+# Run test_script
 - id: test
   alias: Main trigger
   trigger:
@@ -12,6 +14,9 @@
   - data:
       entity_id: ' script.test_script'
     service: script.turn_on
+    
+# Trigger when test script gets turned off
+# Run script.turn_all_off
 - id: 'turn_all_off_automation'
   alias: Auto-Turn off
   trigger:
