@@ -1,0 +1,49 @@
+test_script:
+  alias: Test Script
+  sequence:
+  - condition: state
+    entity_id: binary_sensor.run_today
+    state: 'on'
+  - service: script.turn_on
+    entity_id: script.run_channel
+run_channel:
+  alias: Run Channel
+  sequence:
+  - condition: state
+    entity_id: input_boolean.channel_1
+    state: 'on'
+  - data:
+      entity_id: switch.channel_1
+    service: switch.turn_on
+  - delay: 00:00:{{ '%02d' % (states('input_number.duration')|int) }}
+  - data:
+      entity_id: script.turn_all_off
+    service: script.turn_on
+    
+turn_all_off:
+  alias: Turn of all Channels
+  sequence:
+  - data:
+      entity_id: switch.channel_1
+    service: switch.turn_off
+  - data:
+      entity_id: switch.channel_2
+    service: switch.turn_off
+  - data:
+      entity_id: switch.channel_3
+    service: switch.turn_off
+  - data:
+      entity_id: switch.channel_4
+    service: switch.turn_off
+  - data:
+      entity_id: switch.channel_5
+    service: switch.turn_off
+  - data:
+      entity_id: switch.channel_6
+    service: switch.turn_off
+  - data:
+      entity_id: switch.channel_7
+    service: switch.turn_off
+  - data:
+      entity_id: switch.channel_8
+    service: switch.turn_off

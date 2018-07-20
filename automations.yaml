@@ -1,0 +1,26 @@
+- id: test
+  alias: Main trigger
+  trigger:
+  - minutes: /1
+    platform: time
+    seconds: 0
+  condition:
+  - condition: template
+    value_template: '{{ now().strftime("%H:%M") == states.sensor.trigger_time.state
+      }}'
+  action:
+  - data:
+      entity_id: ' script.test_script'
+    service: script.turn_on
+- id: 'turn_all_off_automation'
+  alias: Auto-Turn off
+  trigger:
+  - entity_id: script.test_script
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data:
+      entity_id: ' script.turn_all_off'
+    service: script.turn_on

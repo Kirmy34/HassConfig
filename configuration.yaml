@@ -1,0 +1,183 @@
+homeassistant:
+    # Name of the location where Home Assistant is running
+    name: Testing
+    # Location required to calculate the time the sun rises and sets
+    latitude: 49.006614
+    longitude: 8.388594
+    elevation: 116
+    unit_system: metric
+    time_zone: Europe/Berlin
+    # Customization file
+    customize: !include customize.yaml
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+http:
+    # Secrets are defined in the file secrets.yaml
+    # api_password: !secret http_password
+    # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+    # base_url: example.duckdns.org:8123
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+python_script:
+
+# GPIO ports
+switch:
+  - platform: rpi_gpio
+    invert_logic: true
+    ports:
+      9:  Channel 1
+      11: Channel 2
+      0:  Channel 3
+      5:  Channel 4
+      6:  Channel 5
+      13: Channel 6
+      19: Channel 7
+      26: Channel 8
+
+# Number Sliders
+input_number:
+    trigger_hour:
+        name: Hours
+        icon: mdi:timer
+        initial: 6
+        min: 0
+        max: 23
+        step: 1
+    trigger_minute:
+        name: Minutes
+        icon: mdi:timer
+        initial: 30
+        min: 0
+        max: 55
+        step: 1
+    duration:
+        name: Duration (Minutes)
+        icon: mdi:timer
+        initial: 15
+        min: 1
+        max: 60
+        step: 1
+
+# Boolean switches
+input_boolean:
+    monday:
+        name: Monday
+        initial: off
+        icon: mdi:calendar
+    tuesday:
+        name: Tuesday
+        initial: off
+        icon: mdi:calendar
+    wednesday:
+        name: Wednesday
+        initial: off
+        icon: mdi:calendar
+    thursday:
+        name: Thursday
+        initial: off
+        icon: mdi:calendar
+    friday:
+        name: Friday
+        initial: off
+        icon: mdi:calendar
+    saturday:
+        name: Saturday
+        initial: off
+        icon: mdi:calendar
+    sunday:
+        name: Sunday
+        initial: off
+        icon: mdi:calendar
+    channel_1:
+        name: Enable channel 1
+        initial: off
+    channel_2:
+        name: Enable channel 2
+        initial: off
+    channel_3:
+        name: Enable channel 3
+        initial: off
+    channel_4:
+        name: Enable channel 4
+        initial: off
+    channel_5:
+        name: Enable channel 5
+        initial: off
+    channel_6:
+        name: Enable channel 6
+        initial: off
+    channel_7:
+        name: Enable channel 7
+        initial: off
+    channel_8:
+        name: Enable channel 8
+        initial: off
+
+# Trigger time sensor
+sensor:
+    - platform: template
+      sensors:
+        trigger_time:
+          friendly_name: 'Time'
+          value_template: >-
+            {{ "%0.02d:%0.02d" | 
+            format(states("input_number.trigger_hour") | 
+            int, states("input_number.trigger_minute") | 
+            int) }}
+        weekday_test:
+          friendly_name: 'Day of week'
+          value_template: >-
+            {{ now().weekday() }}
+binary_sensor:
+    - platform: template
+      sensors:
+        run_today:
+          value_template: >-
+            {{ is_state('binary_sensor.test_monday', 'on')
+            or is_state('binary_sensor.test_tuesday', 'on')
+            or is_state('binary_sensor.test_wednesday', 'on')
+            or is_state('binary_sensor.test_thursday', 'on')
+            or is_state('binary_sensor.test_friday', 'on')
+            or is_state('binary_sensor.test_saturday', 'on')
+            or is_state('binary_sensor.test_sunday', 'on')}}
+        test_monday:
+          value_template: >-
+            {{ now().weekday() == 0 and
+            is_state('input_boolean.monday', 'on')}}
+        test_tuesday:
+          value_template: >-
+            {{ now().weekday() == 1 and
+            is_state('input_boolean.tuesday', 'on')}}
+        test_wednesday:
+          value_template: >-
+            {{ now().weekday() == 2 and
+            is_state('input_boolean.wednesday', 'on')}}
+        test_thursday:
+          value_template: >-
+            {{ now().weekday() == 3 and
+            is_state('input_boolean.thursday', 'on')}}
+        test_friday:
+          value_template: >-
+            {{ now().weekday() == 4 and
+            is_state('input_boolean.friday', 'on')}}
+        test_saturday:
+          value_template: >-
+            {{ now().weekday() == 5 and
+            is_state('input_boolean.saturday', 'on')}}
+        test_sunday:
+          value_template: >-
+            {{ now().weekday() == 6 and
+            is_state('input_boolean.sunday', 'on')}}
