@@ -2,6 +2,9 @@
 Watering system using Homeassistant and Raspberry Pi Zero
 Purpose will be replacing a defect standalone timer currently beeing used to time the watering of my Garden.
 
+This Repo only contains the Homeassistant configuration files. To use it you need a working Homeassistant
+installation and internet access on the device used.
+
 
 Functional Requirements:
   1. Set watering time, days and duration per channel.
