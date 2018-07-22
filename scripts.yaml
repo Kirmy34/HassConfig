@@ -4,21 +4,51 @@ test_script:
   - condition: state
     entity_id: binary_sensor.run_today
     state: 'on'
-  - service: script.turn_on
-    entity_id: script.run_channel
+  - service: script.run_channel
+    data:
+      channel: 'channel_1'
+  - wait_template: "{{ is_state('script.run_channel', 'off') }}"
+  - service: script.run_channel
+    data:
+      channel: 'channel_2'
+  - wait_template: "{{ is_state('script.run_channel', 'off') }}"
+  - service: script.run_channel
+    data:
+      channel: 'channel_3'
+  - wait_template: "{{ is_state('script.run_channel', 'off') }}"
+  - service: script.run_channel
+    data:
+      channel: 'channel_4'
+  - wait_template: "{{ is_state('script.run_channel', 'off') }}"
+  - service: script.run_channel
+    data:
+      channel: 'channel_5'
+  - wait_template: "{{ is_state('script.run_channel', 'off') }}"
+  - service: script.run_channel
+    data:
+      channel: 'channel_6'
+  - wait_template: "{{ is_state('script.run_channel', 'off') }}"
+  - service: script.run_channel
+    data:
+      channel: 'channel_7'
+  - wait_template: "{{ is_state('script.run_channel', 'off') }}"
+  - service: script.run_channel
+    data:
+      channel: 'channel_8'
+  - wait_template: "{{ is_state('script.run_channel', 'off') }}"
+    
+    
 run_channel:
   alias: Run Channel
   sequence:
-  - condition: state
-    entity_id: input_boolean.channel_1
-    state: 'on'
-  - data:
-      entity_id: switch.channel_1
-    service: switch.turn_on
+  - condition: template
+    value_template: >-
+        {{ is_state('input_boolean.' ~ channel, 'on') }}
+  - service: switch.turn_on
+    data_template:
+      entity_id: switch.{{ channel }}
   - delay: 00:00:{{ '%02d' % (states('input_number.duration')|int) }}
-  - data:
-      entity_id: script.turn_all_off
-    service: script.turn_on
+  - service: script.turn_all_off
     
 turn_all_off:
   alias: Turn of all Channels
