@@ -1,0 +1,10 @@
+script.test_script:
+  friendly_name: Run now
+  icon: mdi:play
+automation.main_trigger:
+  friendly_name: Automation
+  icon: mdi:power
+script.next:
+  icon: mdi:skip-forward
+binary_sensor.run_today:
+  friendly_name: Will run today

@@ -1,5 +1,3 @@
-# Triggers if hour and minute are reached every day
-# Run test_script
 - id: test
   alias: Main trigger
   trigger:
@@ -10,22 +8,34 @@
   - condition: template
     value_template: '{{ now().strftime("%H:%M") == states.sensor.trigger_time.state
       }}'
+  - condition: state
+    entity_id: binary_sensor.run_today
+    state: 'on'
   action:
   - data:
       entity_id: ' script.test_script'
     service: script.turn_on
-    
-# Trigger when test script gets turned off
-# Run script.turn_all_off
-- id: 'turn_all_off_automation'
-  alias: Auto-Turn off
+- id: pump_auto_on
+  alias: Turn on pump when one of the channels is turned on
   trigger:
-  - entity_id: script.test_script
+  - entity_id:
+    - binary_sensor.running_now
+    from: 'off'
+    platform: state
+    to: 'on'
+  action:
+  - data:
+      entity_id: switch.channel_8
+    service: switch.turn_on
+- id: pump_auto_off
+  alias: Turn off pump when one of the channels is turned on
+  trigger:
+  - entity_id:
+    - binary_sensor.running_now
     from: 'on'
     platform: state
     to: 'off'
-  condition: []
   action:
   - data:
-      entity_id: ' script.turn_all_off'
-    service: script.turn_on
+      entity_id: switch.channel_8
+    service: switch.turn_off

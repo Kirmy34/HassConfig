@@ -1,0 +1,87 @@
+default_view:
+    name: Home
+    view: yes
+    control: hidden
+    entities:
+        - group.control
+        - group.time
+        - group.info
+        
+options:
+    name: Options
+    view: yes
+    control: hidden
+    entities:
+        - group.settings
+        - group.days
+        
+testing:
+    name: Testing
+    view: yes
+    control: hidden
+    entities:
+        - group.channels
+        - group.control
+
+
+channels:
+    name: Test channels
+    control: hidden
+    entities:
+        - switch.channel_1
+        - switch.channel_2
+        - switch.channel_3
+        - switch.channel_4
+        - switch.channel_5
+        - switch.channel_6
+        - switch.channel_7
+        - switch.channel_8
+      
+days:
+    name: Days
+    control: hidden
+    entities:
+      - input_boolean.monday
+      - input_boolean.tuesday
+      - input_boolean.wednesday
+      - input_boolean.thursday
+      - input_boolean.friday
+      - input_boolean.saturday
+      - input_boolean.sunday
+
+time:
+    name: Time
+    control: hidden
+    entities:
+        - sensor.trigger_time
+        - input_number.trigger_hour
+        - input_number.trigger_minute
+        
+settings:
+    name: Settings
+    control: hidden
+    entities:
+        - input_number.duration
+        - input_boolean.channel_1
+        - input_boolean.channel_2
+        - input_boolean.channel_3
+        - input_boolean.channel_4
+        - input_boolean.channel_5
+        - input_boolean.channel_6
+        - input_boolean.channel_7
+        - input_boolean.channel_8
+        
+control:
+    name: Control
+    control: hidden
+    entities:
+        - automation.main_trigger
+        - script.test_script
+        - script.next
+        
+info:
+    name: Info
+    control: hidden
+    entities:
+        - binary_sensor.run_today
+        - sensor.trigger_time

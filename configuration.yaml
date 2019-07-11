@@ -1,12 +1,12 @@
 homeassistant:
     # Name of the location where Home Assistant is running
-    name: Testing
+    name: Sprinkler automation system
     # Location required to calculate the time the sun rises and sets
     latitude: 49.006614
     longitude: 8.388594
     elevation: 116
     unit_system: metric
-    time_zone: Europe/Berlin
+    time_zone: Europe/Athens
     # Customization file
     customize: !include customize.yaml
 
@@ -22,11 +22,7 @@ http:
     # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
     # base_url: example.duckdns.org:8123
 
-# Enables support for tracking state changes over time
-history:
-
-# View all events in a logbook
-logbook:
+recorder:
 
 group: !include groups.yaml
 automation: !include automations.yaml
@@ -52,79 +48,61 @@ input_number:
     trigger_hour:
         name: Hours
         icon: mdi:timer
-        initial: 6
         min: 0
         max: 23
         step: 1
     trigger_minute:
         name: Minutes
         icon: mdi:timer
-        initial: 30
         min: 0
         max: 55
-        step: 1
+        step: 5
     duration:
         name: Duration (Minutes)
         icon: mdi:timer
-        initial: 15
         min: 1
-        max: 60
+        max: 59
         step: 1
 
 # Boolean switches
 input_boolean:
     monday:
         name: Monday
-        initial: off
         icon: mdi:calendar
     tuesday:
         name: Tuesday
-        initial: off
         icon: mdi:calendar
     wednesday:
         name: Wednesday
-        initial: off
         icon: mdi:calendar
     thursday:
         name: Thursday
-        initial: off
         icon: mdi:calendar
     friday:
         name: Friday
-        initial: off
         icon: mdi:calendar
     saturday:
         name: Saturday
-        initial: off
         icon: mdi:calendar
     sunday:
         name: Sunday
-        initial: off
         icon: mdi:calendar
     channel_1:
         name: Enable channel 1
-        initial: off
     channel_2:
         name: Enable channel 2
-        initial: off
     channel_3:
         name: Enable channel 3
-        initial: off
     channel_4:
         name: Enable channel 4
-        initial: off
     channel_5:
         name: Enable channel 5
-        initial: off
     channel_6:
         name: Enable channel 6
-        initial: off
     channel_7:
         name: Enable channel 7
-        initial: off
     channel_8:
         name: Enable channel 8
-        initial: off
 
 # Trigger time sensor
 sensor:
@@ -141,6 +119,9 @@ sensor:
           friendly_name: 'Day of week'
           value_template: >-
             {{ now().weekday() }}
+    - platform: time_date
+      display_options:
+        - 'time'
 binary_sensor:
     - platform: template
       sensors:
@@ -153,6 +134,15 @@ binary_sensor:
             or is_state('binary_sensor.test_friday', 'on')
             or is_state('binary_sensor.test_saturday', 'on')
             or is_state('binary_sensor.test_sunday', 'on')}}
+        running_now:
+          value_template: >-
+            {{ is_state('switch.channel_1', 'on')
+            or is_state('switch.channel_2', 'on')
+            or is_state('switch.channel_3', 'on')
+            or is_state('switch.channel_4', 'on')
+            or is_state('switch.channel_5', 'on')
+            or is_state('switch.channel_6', 'on')
+            or is_state('switch.channel_7', 'on')}}
         test_monday:
           value_template: >-
             {{ now().weekday() == 0 and
