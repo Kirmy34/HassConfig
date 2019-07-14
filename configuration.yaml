@@ -41,7 +41,7 @@ switch:
       6:  Channel 5
       13: Channel 6
       19: Channel 7
-      26: Channel 8
+      26: Pump
 
 # Number Sliders
 input_number:
@@ -57,8 +57,32 @@ input_number:
         min: 0
         max: 55
         step: 5
-    duration:
-        name: Duration (Minutes)
+    duration1:
+        name: Duration Channel 1
+        icon: mdi:timer
+        min: 1
+        max: 59
+        step: 1
+    duration2:
+        name: Duration Channel 2
+        icon: mdi:timer
+        min: 1
+        max: 59
+        step: 1
+    duration3:
+        name: Duration Channel 3
+        icon: mdi:timer
+        min: 1
+        max: 59
+        step: 1
+    duration4:
+        name: Duration Channel 4
+        icon: mdi:timer
+        min: 1
+        max: 59
+        step: 1
+    duration5:
+        name: Duration Channel 5
         icon: mdi:timer
         min: 1
         max: 59
@@ -101,8 +125,6 @@ input_boolean:
         name: Enable channel 6
     channel_7:
         name: Enable channel 7
-    channel_8:
-        name: Enable channel 8
 
 # Trigger time sensor
 sensor:

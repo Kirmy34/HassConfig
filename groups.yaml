@@ -61,7 +61,11 @@ settings:
     name: Settings
     control: hidden
     entities:
-        - input_number.duration
+        - input_number.duration1
+        - input_number.duration2
+        - input_number.duration3
+        - input_number.duration4
+        - input_number.duration5
         - input_boolean.channel_1
         - input_boolean.channel_2
         - input_boolean.channel_3

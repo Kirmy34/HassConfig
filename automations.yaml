@@ -25,7 +25,7 @@
     to: 'on'
   action:
   - data:
-      entity_id: switch.channel_8
+      entity_id: switch.pump
     service: switch.turn_on
 - id: pump_auto_off
   alias: Turn off pump when one of the channels is turned on
@@ -37,5 +37,5 @@
     to: 'off'
   action:
   - data:
-      entity_id: switch.channel_8
+      entity_id: switch.pump
     service: switch.turn_off

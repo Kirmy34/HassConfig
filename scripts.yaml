@@ -3,35 +3,28 @@ test_script:
   sequence:
   - service: script.run_channel
     data:
-      channel: channel_1
+      - channel: channel_1
+      - duration: duration1
   - wait_template: '{{ is_state(''script.run_channel'', ''off'') }}'
   - service: script.run_channel
     data:
-      channel: channel_2
+      - channel: channel_2
+      - duration: duration2
   - wait_template: '{{ is_state(''script.run_channel'', ''off'') }}'
   - service: script.run_channel
     data:
-      channel: channel_3
+      - channel: channel_3
+      - duration: duration3
   - wait_template: '{{ is_state(''script.run_channel'', ''off'') }}'
   - service: script.run_channel
     data:
-      channel: channel_4
+      - channel: channel_4
+      - duration: duration4
   - wait_template: '{{ is_state(''script.run_channel'', ''off'') }}'
   - service: script.run_channel
     data:
-      channel: channel_5
-  - wait_template: '{{ is_state(''script.run_channel'', ''off'') }}'
-  - service: script.run_channel
-    data:
-      channel: channel_6
-  - wait_template: '{{ is_state(''script.run_channel'', ''off'') }}'
-  - service: script.run_channel
-    data:
-      channel: channel_7
-  - wait_template: '{{ is_state(''script.run_channel'', ''off'') }}'
-  - service: script.run_channel
-    data:
-      channel: channel_8
+      - channel: channel_5
+      - duration: duration5
   - wait_template: '{{ is_state(''script.run_channel'', ''off'') }}'
 run_channel:
   alias: Run Channel
@@ -41,7 +34,7 @@ run_channel:
   - service: switch.turn_on
     data_template:
       entity_id: switch.{{ channel }}
-  - delay: 00:{{ '%02d' % (states('input_number.duration')|int) }}:00
+  - delay: 00:{{ '%02d' % (states('input_number.{{duration}}')|int) }}:00
   - service: script.turn_all_off
 turn_all_off:
   alias: Turn of all Channels
@@ -60,15 +53,6 @@ turn_all_off:
     service: switch.turn_off
   - data:
       entity_id: switch.channel_5
-    service: switch.turn_off
-  - data:
-      entity_id: switch.channel_6
-    service: switch.turn_off
-  - data:
-      entity_id: switch.channel_7
-    service: switch.turn_off
-  - data:
-      entity_id: switch.channel_8
     service: switch.turn_off
 next:
   alias: Next channel
