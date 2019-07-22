@@ -193,3 +193,5 @@ binary_sensor:
           value_template: >-
             {{ now().weekday() == 6 and
             is_state('input_boolean.sunday', 'on')}}
+timer:
+    timer0:
