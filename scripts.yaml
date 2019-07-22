@@ -4,27 +4,27 @@ test_script:
   - service: script.run_channel
     data:
       - channel: channel_1
-      - duration: '00:{{ '%02d' % (states('input_number.duration1')|int) }}:00'
+      - duration: '00:{{ states('input_number.duration1')|int }}:00'
   - wait_template: '{{ is_state(''script.run_channel'', ''off'') }}'
   - service: script.run_channel
     data:
       - channel: channel_2
-      - duration: '00:{{ '%02d' % (states('input_number.duration2')|int) }}:00'
+      - duration: '00:{{ states('input_number.duration2')|int }}:00'
   - wait_template: '{{ is_state(''script.run_channel'', ''off'') }}'
   - service: script.run_channel
     data:
       - channel: channel_3
-      - duration: '00:{{ '%02d' % (states('input_number.duration3')|int) }}:00'
+      - duration: '00:{{ states('input_number.duration3')|int }}:00'
   - wait_template: '{{ is_state(''script.run_channel'', ''off'') }}'
   - service: script.run_channel
     data:
       - channel: channel_4
-      - duration: '00:{{ '%02d' % (states('input_number.duration4')|int) }}:00'
+      - duration: '00:{{ states('input_number.duration4')|int }}:00'
   - wait_template: '{{ is_state(''script.run_channel'', ''off'') }}'
   - service: script.run_channel
     data:
       - channel: channel_5
-      - duration: '00:{{ '%02d' % (states('input_number.duration5')|int) }}:00'
+      - duration: '00:{{ states('input_number.duration5')|int }}:00'
   - wait_template: '{{ is_state(''script.run_channel'', ''off'') }}'
 run_channel:
   alias: Run Channel
